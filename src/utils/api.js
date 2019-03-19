@@ -2,23 +2,29 @@ import axios from 'axios';
 
 const apiKey = "E0iMhA8rz9SlRIBIZKZMw"
 
-let requestUri1 = `https://cors-anywhere.herokuapp.com/` +
-	`https://www.goodreads.com/search/index.xml?`;
+//`https://cors-anywhere.herokuapp.com/` +
+		
+//let requestUri1 =  `https://www.goodreads.com/search/index.xml?`;
 
-
-let requestUri2 = `https://cors-anywhere.herokuapp.com/` +
-	`https://www.goodreads.com/book/show/`;
-
+//let requestUri2 = `https://cors-anywhere.herokuapp.com/` + `https://www.goodreads.com/book/show/`;
 
 export function getBooks(page, search) {
+	let reqURL = ``
 	if(page !== 0) {
-		requestUri1 += `page=${page}&`
+		reqURL = `search/index.xml?page=${page}&key=${apiKey}&q=${search}`
+	} else {
+		reqURL = `search/index.xml?key=${apiKey}&q=${search}`
 	}
-	return axios.get(requestUri1 + `key=${apiKey}&q=${search}`)
+
+	return axios.get(reqURL)
 		.then(res => {
 			let data = parseXMLResponse(res.data);
 			return data
 		})
+		.catch(err =>{
+			return err
+		})
+	
 }
 
 
@@ -55,7 +61,7 @@ function XMLToJson(XML) {
 
 
 export function getBookDetail(bookId) {
-	return axios.get(requestUri2 + `${bookId}?key=${apiKey}`)
+	return axios.get(`book/show/${bookId}?key=${apiKey}`)
 		.then(res => {
 			let data = parseXMLResponseDetails(res.data);
 			return data

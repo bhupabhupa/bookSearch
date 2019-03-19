@@ -1,7 +1,8 @@
 {
-  "name": "booklib",
+  "name": "bookSearch",
   "version": "0.1.0",
   "private": true,
+  "proxy": "https://www.goodreads.com/",
   "dependencies": {
     "axios": "^0.18.0",
     "devextreme": "^18.2.6",
